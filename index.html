@@ -1,0 +1,42 @@
+<!doctype html>
+<head>
+<meta charset="utf-8">
+<title>sketch.js</title>
+<style>
+#simple_sketch {border:1px solid #000;}
+</style>
+
+</head>
+<body>
+
+<canvas id='simple_sketch' width='800' height='300'></canvas>
+<hr>
+<a href="#simple_sketch" data-download="png">Data_URI</a>
+<a href="#" id="save">Download</a>
+
+
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src='sketch.js'></script>
+
+<script type='text/javascript'>
+$(function() {
+	
+	$('#simple_sketch').sketch();
+	
+	$('#save').bind('click',function(){
+		//data:image/png;base64, 이부분을 날리기 위해서 
+		var dataUri = $('#simple_sketch')[0].toDataURL('image/png').split(",")[1];
+		var apiUrl = "http://niceaji.allalla.com/save2image/"
+
+
+		$.post(apiUrl, { data: dataUri } ,function(data){
+			location.href = apiUrl+"/test.png";
+		});
+		
+		return;
+	});
+});
+</script>
+
+</body>
+</html>
